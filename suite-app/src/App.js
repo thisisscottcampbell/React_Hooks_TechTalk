@@ -23,6 +23,7 @@ function App() {
 					value={userQuery}
 					onChange={updateUserQuery}
 					onKeyPress={handleEnter}
+					placeholder="search for anything..."
 				/>
 				<button onClick={googleIt}>Search</button>
 			</div>

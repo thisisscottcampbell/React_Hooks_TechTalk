@@ -17,10 +17,19 @@ const Tasks = () => {
 
 	const handleEnter = (e) => e.key === 'Enter' && addTask();
 
+	const finishTask = (completedTask) => {
+		setCompletedTasks([...completedTasks, completedTask]);
+		setTasks(tasks.filter((task) => task.id !== completedTask.id));
+	};
+
 	const renderTasks = tasks.map((task) => {
 		const { id, text } = task;
 
-		return <div key={id}>{text}</div>;
+		return (
+			<div key={id} onClick={() => finishTask(task)}>
+				{text}
+			</div>
+		);
 	});
 
 	return (

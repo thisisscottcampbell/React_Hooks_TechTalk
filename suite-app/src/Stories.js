@@ -11,7 +11,7 @@ const Stories = () => {
 
 	return (
 		<div className="Stories">
-			<h3>Stories</h3>
+			<h3>Tech News</h3>
 			{stories.map((story) => {
 				const { id, by, time, title, url } = story;
 
