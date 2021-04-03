@@ -1,6 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import useInput from './useHooks/useInput';
 import { v4 as uuidv4 } from 'uuid';
+
+const TASK_STORAGE_KEY = 'TASKS_STORAGE_KEY';
+
+const storeTasks = (taskData) => {
+	localStorage.setItem(TASK_STORAGE_KEY, JSON.stringify(taskData));
+};
 
 const Tasks = () => {
 	const [text, setText, resetText] = useInput('');
@@ -32,6 +38,18 @@ const Tasks = () => {
 		);
 	});
 
+	const renderCompleted = completedTasks.map((task) => {
+		const { id, text } = task;
+
+		return (
+			<div key={id} onClick={() => finishTask(task)}>
+				{text}
+			</div>
+		);
+	});
+
+	useEffect(() => storeTasks({ tasks, completedTasks }));
+
 	return (
 		<div>
 			<h3>Tasks</h3>
@@ -40,6 +58,7 @@ const Tasks = () => {
 				<button onClick={addTask}>Add Task</button>
 			</div>
 			<div className="task-list">{renderTasks}</div>
+			<div className="completed-list">{renderCompleted}</div>
 		</div>
 	);
 };
