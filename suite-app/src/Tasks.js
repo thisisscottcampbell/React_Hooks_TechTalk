@@ -4,13 +4,15 @@ import { v4 as uuidv4 } from 'uuid';
 
 const TASK_STORAGE_KEY = 'TASKS_STORAGE_KEY';
 
-const storeTasks = (taskData) => {
+const storeTasks = (taskData) =>
 	localStorage.setItem(TASK_STORAGE_KEY, JSON.stringify(taskData));
-};
+
+const readTasks = () => JSON.parse(localStorage.getItem(TASK_STORAGE_KEY));
 
 const Tasks = () => {
 	const [text, setText, resetText] = useInput('');
-	const [tasks, setTasks] = useState([]);
+	const storedTasks = readTasks();
+	const [tasks, setTasks] = useState(storedTasks.tasks);
 	const [completedTasks, setCompletedTasks] = useState([]);
 
 	//const updateTaskText = (e) => setText(e.target.value);
