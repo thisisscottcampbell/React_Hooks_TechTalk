@@ -45,5 +45,42 @@ let pNode = document.createElement('p');
 pNode.innerText = 'Hello World';
 rootDiv.appendChild(pNode);
 
+But, for obvious reasons, this can become taxing and expensive...
+
 TWO: GO through RECONCILIATION
 decide whether to update an existing node OR create a new node
+
+So, would ask ... 'Is the root div's child alreary a <p>?
+And since it is, just runs
+
+pNode.innerText = 'Hello World';
+
+This also illuminates why React asks us for unique keys in mapped elements
+
+stuff.map(thing => <div key={thing.id} />)
+
+won't need to update or act upon each node, only the targeted node by id
+
+Soo that's how React works DOM nodes, what about components?
+
+Well, all our react components are functions. Got it.
+
+BUT, we don't call those functions...
+
+We write JSX that specifies what we'd like to render
+
+ReactDOM.render(<App />, document.getElementById('root'));
+
+And with that we hand over the control to react to make ALL the function calls ... this is inversion of control
+
+By handing over the responsibility to React, React gets the ability to do some pretty sweet stuff that, if we were to helm the reigns, would be totally lost
+
+For instance, React can recusively call multiple nested components if a nested JSX structure is provided. SO, we don't call functions to then execute component structure, React does that for us, consistently and efficiently.
+
+So, determines what needs to render to determine the necessary DOM structure over time
+
+Giving React the power to control app components also gives React the ability to augment components with features like STATE, local data, and bind SIDE EFFECTS to rendering of components, perhaps fetching data.
+
+AND the API for such augmentation that we are going to discuss is REACT HOOKS
+useState augments components by assigning and handling state
+useEffect augments components by assigning and handling render side effects
