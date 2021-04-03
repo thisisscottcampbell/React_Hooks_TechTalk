@@ -7,7 +7,11 @@ const TASK_STORAGE_KEY = 'TASKS_STORAGE_KEY';
 const storeTasks = (taskData) =>
 	localStorage.setItem(TASK_STORAGE_KEY, JSON.stringify(taskData));
 
-const readTasks = () => JSON.parse(localStorage.getItem(TASK_STORAGE_KEY));
+const readTasks = () => {
+	const taskData = JSON.parse(localStorage.getItem(TASK_STORAGE_KEY));
+
+	return taskData ? taskData : { tasks: [], completedTasks: [] };
+};
 
 const Tasks = () => {
 	const [text, setText, resetText] = useInput('');
@@ -30,6 +34,9 @@ const Tasks = () => {
 		setTasks(tasks.filter((task) => task.id !== completedTask.id));
 	};
 
+	const deleteTask = (task) => {
+		setCompletedTasks(completedTasks.filter((task) => task.id !== task.id));
+	};
 	const renderTasks = tasks.map((task) => {
 		const { id, text } = task;
 
@@ -44,8 +51,9 @@ const Tasks = () => {
 		const { id, text } = task;
 
 		return (
-			<div key={id} onClick={() => finishTask(task)}>
+			<div key={id} onClick={() => deleteTask(task)}>
 				{text}
+				{' --'} <span className="delete-task">x</span>
 			</div>
 		);
 	});
